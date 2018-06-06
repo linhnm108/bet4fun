@@ -1,0 +1,51 @@
+<!-- Modal -->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Bet4Fun - Football is passion.</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/bootstrap-validator/0.11.9/js/validator.js}"></script>
+</head>
+<body>
+	<div th:insert="~{header :: header}"></div>
+	<div th:fragment="signup" class="container">
+		<div class="row">
+			<div class="col-md-6 col-lg-offset-3">
+				<h2>Become a Legend</h2>
+				<hr style="margin-bottom: 20px; margin-top: 5px;">
+				<form role="form" method="POST" th:action="@{/signup}" th:object="${userViewModel}" data-toggle="validator">
+					<div class="form-group has-feedback" >
+						<label for="username">Username</label>
+						<input type="text" class="form-control" placeholder="Enter Username" name="username" th:field="*{username}" required />
+						<div class="help-block with-errors">
+							<p style="color: #a94442;" th:each="err : ${#fields.errors('username')}" th:text="${err}" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input type="password" class="form-control" placeholder="Enter password" name="password" th:field="*{password}" required />
+						<div class="help-block with-errors"></div>
+					</div>
+					<div class="form-group">
+						<label for="confirmPsw">Confirm Password</label>
+						<input type="password" class="form-control" placeholder="Confirm password" name="confirmPassword" th:field="*{confirmPassword}" required>
+						<div class="help-block with-errors">
+							<p style="color: #a94442;" th:each="err : ${#fields.errors('confirmPassword')}" th:text="${err}" />
+						</div>
+					</div>
+					<button type="submit" class="btn btn-default btn-success btn-block">Sign Up</button>
+				</form>
+				<div class="modal-footer">
+					<p>
+						Already a member? <a href="/login">Login</a>
+					</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>

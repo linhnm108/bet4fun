@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Bet4Fun - Football is passion.</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div th:fragment="sidebar(active)" class="col-md-3" role="complementary">
+		<div class="panel panel-default" style="margin-top: 20px;">
+			<div class="panel-heading" style="margin-top: 1px; margin-left: 1px;">Administrator Panel</div>
+			<div class="panel-body">
+				<ul class="nav nav-pills nav-stacked">
+					<li th:classappend="${active == 'roles'} ? active : ''"><a href="/roles">Role management</a></li>
+					<li th:classappend="${active == 'users'} ? active : ''"><a href="/users">User management</a></li>
+					<li th:classappend="${active == 'matches'} ? active : ''"><a href="/matches">Match management</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

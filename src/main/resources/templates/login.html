@@ -1,0 +1,50 @@
+<!-- Modal -->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Bet4Fun - Football is passion.</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/bootstrap-validator/0.11.9/js/validator.js}"></script>
+</head>
+<body>
+	<div th:insert="~{header :: header}"></div>
+	<div th:fragment="login" class="container">
+		<div class="row">
+			<div class="col-md-6 col-lg-offset-3">
+				<h2>Log In to Bet4Fun</h2>
+				<hr style="margin-bottom: 20px; margin-top: 5px;">
+				<div th:if="${error != null}" class="alert alert-danger">
+					<p th:text="${error}"></p>
+				</div>
+				<div th:if="${message != null}" class="alert alert-success">
+					<p th:text="${message}"></p>
+				</div>
+				<form role="form" method="POST" th:action="@{/login}" data-toggle="validator">
+					<div class="form-group has-feedback" >
+						<label for="username">Username</label>
+						<input type="text" class="form-control" placeholder="Enter Username" name="username" required />
+						<div class="help-block with-errors"></div>
+					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input type="password" class="form-control" placeholder="Enter password" name="password" required />
+						<div class="help-block with-errors"></div>
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" value="" checked>Remember me</label>
+					</div>
+					<button type="submit" class="btn btn-default btn-success btn-block">Login</button>
+				</form>
+				<div class="modal-footer">
+					<p>
+						Not a member? <a href="/signup">Sign Up</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>

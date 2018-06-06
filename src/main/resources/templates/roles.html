@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Bet4Fun - Football is passion.</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div th:insert="~{header :: header}"></div>
+	<div class="container">
+		<div class="row">
+			<div th:insert="~{sidebar :: sidebar (${new String('roles')})}"></div>
+			<div class="col-md-9" role="main">
+				<h3>Roles</h3>
+
+				<div th:if="${new_role != null}" class="alert alert-success">
+					<p>Role <strong><span th:text="${new_role}"></span></strong> added successfully!</p>
+				</div>
+				<div th:if="${deleted_role != null}" class="alert alert-success">
+					<p>Role <strong><span th:text="${deleted_role}"></span></strong> deleted successfully!</p>
+				</div>
+
+				<a href="/role/add" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-plus"></i> Add role</a>
+				<br /><br />
+
+				<p th:if="${#lists.isEmpty(roles)}">No roles found</p>
+
+				<table class="table" th:if="${not #lists.isEmpty(roles)}">
+					<tr>
+						<th>Id</th>
+						<th>Role</th>
+						<th></th>
+					</tr>
+					<tr data-th-each="role : ${roles}">
+						<td data-th-text="${role.roleId}"></td>
+						<td data-th-text="${role.roleName}"></td>
+						<td>
+							<form method="POST" th:action="@{/role/delete}">
+							<input type="hidden" name="uuid" id="uuid" th:value="${role.roleId}" />
+								<button type="submit" class="btn btn-danger btn-sm"> <i class="glyphicon glyphicon-remove-sign"></i> Delete</button>
+							</form>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

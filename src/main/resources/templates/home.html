@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Bet4Fun - Football is passion.</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div th:insert="~{header :: header}"></div>
+	<div class="container">
+		<div class="row">
+			<div th:insert="~{sidebar :: sidebar (${new String()})}"></div>
+			<div class="col-md-9" role="main">
+				<h3>Welcome to Bet4Fun</h3>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

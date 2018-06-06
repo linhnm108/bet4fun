@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Bet4Fun - Football is passion.</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div th:insert="~{header :: header}"></div>
+	<div class="container">
+		<div class="row">
+			<div th:insert="~{sidebar :: sidebar (${new String('users')})}"></div>
+			<div class="col-md-9" role="main">
+				<h3>Users</h3>
+
+				<div th:if="${deleted_user != null}" class="alert alert-success">
+					<p>User <strong><span th:text="${deleted_user}"></span></strong> deleted successfully!</p>
+				</div>
+
+				<p th:if="${#lists.isEmpty(users)}">No users found</p>
+
+				<table class="table" th:if="${not #lists.isEmpty(users)}">
+					<tr>
+						<th>Id</th>
+						<th>User</th>
+						<th>Balance</th>
+						<th>Roles</th>
+						<th></th>
+					</tr>
+					<tr data-th-each="user : ${users}">
+						<td data-th-text="${user.clientId}"></td>
+						<td data-th-text="${user.clientName}"></td>
+						<td data-th-text="${user.balance}"></td>
+						<td data-th-text="${user.getStringRoles()}"></td>
+						<td>
+							<form method="POST" th:action="@{/user/delete}">
+							<input type="hidden" name="uuid" id="uuid" th:value="${user.clientId}" />
+								<button type="submit" class="btn btn-danger btn-sm"> <i class="glyphicon glyphicon-remove-sign"></i> Delete</button>
+							</form>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
