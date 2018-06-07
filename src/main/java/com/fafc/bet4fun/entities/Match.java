@@ -5,11 +5,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -47,6 +51,10 @@ public class Match implements Serializable {
     @OneToOne(mappedBy="match")
     private Result result;
 
-    @OneToMany(mappedBy="match")
+    @ManyToMany(cascade = { CascadeType.DETACH }, fetch = FetchType.EAGER)
+    @JoinTable(
+            name="match_handicap_link",
+            joinColumns = { @JoinColumn(name="match_id") },
+            inverseJoinColumns = { @JoinColumn(name="handicap_id") })
     private List<Handicap> handicaps;
 }
