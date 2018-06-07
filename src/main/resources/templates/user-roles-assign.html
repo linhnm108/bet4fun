@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+<head>
+<title>Bet4Fun - Football is passion.</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div th:insert="~{header :: header}"></div>
+	<div class="container">
+		<div class="row">
+			<div th:insert="~{sidebar :: sidebar (${new String('users')})}"></div>
+			<div class="col-md-9" role="main">
+				<h3>Assign Role</h3>
+				<form method="POST" th:action="@{/user/roles/assign}" th:object="${user}" data-toggle="validator">
+					<input type="hidden" id="clientId" th:field="*{clientId}" th:value="${user.clientId}" />
+					<div class="form-group">
+						<label for="clientName">Username</label>
+						<input type="text" id="clientName" class="form-control" th:field="*{clientName}" th:value="${user.clientName}" disabled />
+						<div class="help-block with-errors"></div>
+					</div>
+					<div class="form-group">
+						<label for="balance">Roles</label>
+						<div class="row checkbox">
+							<div class="col-sm-2">
+								<label><input type="checkbox" name="strRoles" value="ADMIN" th:checked="${user.isAdmin()}">ADMIN</label>
+							</div>
+							<div class="col-sm-2">
+								<label><input type="checkbox" name="strRoles" value="BOOKIE" th:checked="${user.isBookie()}">BOOKIE</label>
+							</div>
+							<div class="col-sm-2">
+								<label><input type="checkbox" name="strRoles" value="PUNTER" th:checked="${user.isPunter()}">PUNTER</label>
+							</div>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-success">Save</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

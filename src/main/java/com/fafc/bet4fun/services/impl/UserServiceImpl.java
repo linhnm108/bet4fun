@@ -55,4 +55,14 @@ public class UserServiceImpl implements UserService {
         this.clientRepository.deleteById(UUID.fromString(uuid));
     }
 
+    @Override
+    public Client findByClientId(String uuid) {
+        return this.clientRepository.findById(UUID.fromString(uuid)).get();
+    }
+
+    @Override
+    public Client saveUser(Client user) {
+        return this.clientRepository.save(user);
+    }
+
 }

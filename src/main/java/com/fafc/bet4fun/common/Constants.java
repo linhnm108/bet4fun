@@ -5,4 +5,7 @@ public class Constants {
     public static final String BOOKIE_ROLE = "BOOKIE";
     public static final String PUNTER_ROLE = "PUNTER";
     public static final String [] DEFAULT_ROLES = { PUNTER_ROLE };
+
+    public static final String MESSAGE = "message";
+    public static final String ERROR = "error";
 }

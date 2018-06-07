@@ -6,7 +6,7 @@ import com.fafc.bet4fun.entities.Role;
 
 public interface RoleService {
     public List<Role> getAllRoles();
-    public List<Role> getDefaultRoles();
+    public List<Role> getRoleByNames(String [] strRoles);
     public Role saveRole(String roleName);
     public void deleteRole(String uuid);
 }

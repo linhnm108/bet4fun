@@ -38,7 +38,7 @@
 						<td data-th-text="${role.roleId}"></td>
 						<td data-th-text="${role.roleName}"></td>
 						<td>
-							<form method="POST" th:action="@{/role/delete}">
+							<form method="POST" th:action="@{/role/delete}" class="pull-right">
 							<input type="hidden" name="uuid" id="uuid" th:value="${role.roleId}" />
 								<button type="submit" class="btn btn-danger btn-sm"> <i class="glyphicon glyphicon-remove-sign"></i> Delete</button>
 							</form>

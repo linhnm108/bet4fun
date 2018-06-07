@@ -19,11 +19,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fafc.bet4fun.common.Constants;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +38,9 @@ import lombok.Setter;
 public class Client implements UserDetails {
 
     private static final long serialVersionUID = 950514943286864670L;
+
+    @Transient
+    private String [] strRoles;
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -102,5 +108,17 @@ public class Client implements UserDetails {
             roles.add(role.getRoleName());
         }
         return Arrays.toString(roles.toArray());
+    }
+
+    public boolean isAdmin() {
+        return this.getStringRoles().contains(Constants.ADMIN_ROLE);
+    }
+
+    public boolean isBookie() {
+        return this.getStringRoles().contains(Constants.BOOKIE_ROLE);
+    }
+
+    public boolean isPunter() {
+        return this.getStringRoles().contains(Constants.PUNTER_ROLE);
     }
 }
