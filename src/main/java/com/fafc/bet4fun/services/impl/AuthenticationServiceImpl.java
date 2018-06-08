@@ -49,5 +49,4 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
         return null;
     }
-
 }

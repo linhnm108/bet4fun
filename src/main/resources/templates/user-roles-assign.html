@@ -26,13 +26,13 @@
 						<label for="balance">Roles</label>
 						<div class="row checkbox">
 							<div class="col-sm-2">
-								<label><input type="checkbox" name="strRoles" value="ADMIN" th:checked="${user.isAdmin()}">ADMIN</label>
+								<label><input type="checkbox" name="strRoles" value="ROLE_ADMIN" th:checked="${user.isAdmin()}">ADMIN</label>
 							</div>
 							<div class="col-sm-2">
-								<label><input type="checkbox" name="strRoles" value="BOOKIE" th:checked="${user.isBookie()}">BOOKIE</label>
+								<label><input type="checkbox" name="strRoles" value="ROLE_BOOKIE" th:checked="${user.isBookie()}">BOOKIE</label>
 							</div>
 							<div class="col-sm-2">
-								<label><input type="checkbox" name="strRoles" value="PUNTER" th:checked="${user.isPunter()}">PUNTER</label>
+								<label><input type="checkbox" name="strRoles" value="ROLE_PUNTER" th:checked="${user.isPunter()}">PUNTER</label>
 							</div>
 						</div>
 					</div>

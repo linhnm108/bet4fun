@@ -46,6 +46,9 @@ public class UserController {
 
     @RequestMapping(value="/login", method = RequestMethod.GET)
     public String login(Model model, String error, String logout) {
+        if (this.authenticationService.getLoggedInUser() != null) {
+            return "redirect:/"; 
+        }
         if (error != null) {
             model.addAttribute(Constants.ERROR, "Your username and password is invalid.");
         }

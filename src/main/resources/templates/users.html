@@ -24,14 +24,12 @@
 
 				<table class="table" th:if="${not #lists.isEmpty(users)}">
 					<tr>
-						<th>Id</th>
 						<th>User</th>
 						<th>Balance</th>
 						<th>Roles</th>
 						<th></th>
 					</tr>
 					<tr data-th-each="user : ${users}">
-						<td data-th-text="${user.clientId}"></td>
 						<td data-th-text="${user.clientName}"></td>
 						<td data-th-text="${user.balance}"></td>
 						<td data-th-text="${user.getStringRoles()}"></td>
@@ -43,7 +41,7 @@
 										<button type="submit" class="btn btn-success btn-sm"> <i class="glyphicon glyphicon glyphicon-edit"></i> Assign Role</button>
 									</form>
 								</div>
-								<div class="col-sm-1" th:if="${user.getStringRoles().contains('ADMIN') == false}">
+								<div class="col-sm-1" th:if="${user.getStringRoles().contains('ROLE_ADMIN') == false}">
 									<form method="POST" th:action="@{/user/delete}">
 										<input type="hidden" name="uuid" id="uuid" th:value="${user.clientId}" />
 										<button type="submit" class="btn btn-danger btn-sm"> <i class="glyphicon glyphicon glyphicon-remove-sign"></i> Delete</button>

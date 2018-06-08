@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <title>Bet4Fun - Football is passion.</title>
 <meta charset="utf-8" />
@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div th:fragment="sidebar(active)" class="col-md-3" role="complementary">
-		<div class="panel panel-default" style="margin-top: 20px;">
+		<div class="panel panel-default" style="margin-top: 20px;" sec:authorize="hasRole('ROLE_ADMIN')">
 			<div class="panel-heading" style="margin-top: 1px; margin-left: 1px;">Administrator Panel</div>
 			<div class="panel-body">
 				<ul class="nav nav-pills nav-stacked">
