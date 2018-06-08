@@ -14,12 +14,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.fafc.bet4fun.common.DateTimeUtils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -48,8 +50,17 @@ public class Match implements Serializable {
     @Column(name = "schedule_date")
     private Date scheduleDate;
 
-    @OneToOne(mappedBy="match")
-    private Result result;
+    @Transient
+    private String strScheduleDate;
+
+    @Column(name = "number_goal_home")
+    private int numberGoalHome;
+
+    @Column(name = "number_goal_away")
+    private int numberGoalAway;
+
+    @Column(name = "status")
+    private String status;
 
     @ManyToMany(cascade = { CascadeType.DETACH }, fetch = FetchType.EAGER)
     @JoinTable(
@@ -57,4 +68,14 @@ public class Match implements Serializable {
             joinColumns = { @JoinColumn(name="match_id") },
             inverseJoinColumns = { @JoinColumn(name="handicap_id") })
     private List<Handicap> handicaps;
+
+    public String getStrLocalScheduleDate() {
+        Date localDate = DateTimeUtils.convertUTCDateToLocal(this.scheduleDate);
+        return DateTimeUtils.convertDateToString(localDate);
+    }
+
+    public void convertLocalScheduleDateToUTC() {
+        Date localDate = DateTimeUtils.convertStringToDate(this.strScheduleDate);
+        this.scheduleDate = DateTimeUtils.convertLocalDateToUTC(localDate);
+    }
 }

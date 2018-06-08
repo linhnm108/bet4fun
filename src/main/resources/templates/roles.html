@@ -23,7 +23,7 @@
 					<p>Role <strong><span th:text="${deleted_role}"></span></strong> deleted successfully!</p>
 				</div>
 
-				<a href="/role/add" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-plus"></i> Add role</a>
+				<a href="/role/add" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Add role</a>
 				<br /><br />
 
 				<p th:if="${#lists.isEmpty(roles)}">No roles found</p>
@@ -39,8 +39,8 @@
 						<td data-th-text="${role.roleName}"></td>
 						<td>
 							<form method="POST" th:action="@{/role/delete}" class="pull-right">
-							<input type="hidden" name="uuid" id="uuid" th:value="${role.roleId}" />
-								<button type="submit" class="btn btn-danger btn-sm"> <i class="glyphicon glyphicon-remove-sign"></i> Delete</button>
+								<input type="hidden" name="uuid" id="uuid" th:value="${role.roleId}" />
+								<button type="submit" class="btn btn-danger"> <i class="glyphicon glyphicon-remove-sign"></i> Delete</button>
 							</form>
 						</td>
 					</tr>

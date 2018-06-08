@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Bet4Fun - Football is passion.</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/bootstrap-datetimepicker.min.css}">
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/bootstrap-validator/0.11.9/js/validator.js}"></script>
+<script th:src="@{/js/bootstrap-datetimepicker.js}"></script>
+</head>
+<body>
+	<div th:insert="~{header :: header}"></div>
+	<div class="container">
+		<div class="row">
+			<div th:insert="~{sidebar :: sidebar (${new String('matches')})}"></div>
+			<div class="col-md-9" role="main">
+				<h3>Add match</h3>
+				<form method="POST" th:action="@{/match/add}" th:object="${match}" data-toggle="validator" class="col-md-7">
+					<div class="form-group">
+						<label for="homeName">Home</label>
+						<input type="text" name="homeName" id="homeName" th:field="*{homeName}" class="form-control" required />
+						<div class="help-block with-errors"></div>
+					</div>
+					<div class="form-group">
+						<label for="awayName">Away</label>
+						<input type="text" name="awayName" id="awayName" th:field="*{awayName}" class="form-control" required />
+						<div class="help-block with-errors"></div>
+					</div>
+					<div class="form-group">
+						<label for="scheduleDate">Date</label>
+						<div class="input-group date form_datetime">
+							<input type="text" name="scheduleDate" id="scheduleDate" th:field="*{strScheduleDate}" class="form-control" required />
+							<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+						<div class="help-block with-errors"></div>
+					</div>
+					<button type="submit" class="btn btn-success">Save</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+    $(".form_datetime").datetimepicker({
+        format: "yyyy-mm-dd hh:ii",
+        autoclose: true,
+        todayBtn: true,
+        minuteStep: 5
+    });
+</script>
+</html>

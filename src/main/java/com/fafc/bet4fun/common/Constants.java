@@ -8,4 +8,10 @@ public class Constants {
 
     public static final String MESSAGE = "message";
     public static final String ERROR = "error";
+
+    public static final String DATE_PATTERN = "yyyy-MM-dd HH:mm";
+
+    public static final String MATCH_NOT_STARTED_STATUS = "Not-Started";
+    public static final String MATCH_IN_PLAY_STATUS = "In-Play";
+    public static final String MATCH_FINISH_STATUS = "Finish";
 }

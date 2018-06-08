@@ -15,7 +15,7 @@
 			<div th:insert="~{sidebar :: sidebar (${new String('users')})}"></div>
 			<div class="col-md-9" role="main">
 				<h3>Assign Role</h3>
-				<form method="POST" th:action="@{/user/roles/assign}" th:object="${user}" data-toggle="validator">
+				<form method="POST" th:action="@{/user/roles/assign}" th:object="${user}" data-toggle="validator" class="col-md-7">
 					<input type="hidden" id="clientId" th:field="*{clientId}" th:value="${user.clientId}" />
 					<div class="form-group">
 						<label for="clientName">Username</label>

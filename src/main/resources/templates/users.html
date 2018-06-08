@@ -34,17 +34,17 @@
 						<td data-th-text="${user.balance}"></td>
 						<td data-th-text="${user.getStringRoles()}"></td>
 						<td>
-							<div class= "pull-right">
-								<div class="col-sm-6">
+							<div class= "pull-right" th:if="${user.getStringRoles().contains('ROLE_ADMIN') == false}">
+								<div class="col-sm-6" >
 									<form method="GET" th:action="@{/user/roles/assign}">
 										<input type="hidden" name="uuid" id="uuid" th:value="${user.clientId}" />
-										<button type="submit" class="btn btn-success btn-sm"> <i class="glyphicon glyphicon glyphicon-edit"></i> Assign Role</button>
+										<button type="submit" class="btn btn-success"> <i class="glyphicon glyphicon glyphicon-edit"></i> Assign Role</button>
 									</form>
 								</div>
-								<div class="col-sm-1" th:if="${user.getStringRoles().contains('ROLE_ADMIN') == false}">
+								<div class="col-sm-1" >
 									<form method="POST" th:action="@{/user/delete}">
 										<input type="hidden" name="uuid" id="uuid" th:value="${user.clientId}" />
-										<button type="submit" class="btn btn-danger btn-sm"> <i class="glyphicon glyphicon glyphicon-remove-sign"></i> Delete</button>
+										<button type="submit" class="btn btn-danger"> <i class="glyphicon glyphicon glyphicon-remove-sign"></i> Delete</button>
 									</form>
 								</div>
 							</div>

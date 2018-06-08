@@ -16,7 +16,7 @@
 			<div th:insert="~{sidebar :: sidebar (${new String('roles')})}"></div>
 			<div class="col-md-9" role="main">
 				<h3>Add role</h3>
-				<form method="POST" th:action="@{/role/add}" data-toggle="validator">
+				<form method="POST" th:action="@{/role/add}" data-toggle="validator" class="col-md-7">
 					<div class="form-group">
 						<label for="roleName">Role</label>
 						<input type="text" name="roleName" id="roleName" class="form-control" required />
