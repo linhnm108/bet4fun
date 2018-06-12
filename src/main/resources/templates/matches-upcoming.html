@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+<head>
+<title>Bet4Fun - Football is passion.</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div th:insert="~{header :: header}"></div>
+	<div class="container">
+		<div class="row">
+			<div th:insert="~{sidebar :: sidebar (${new String('matches-upcoming')})}"></div>
+			<div class="col-md-9" role="main">
+				<h3>Upcoming matches</h3>
+
+				<div th:if="${message != null}" class="alert alert-success">
+					<p th:each="msg : ${message}" th:text="${msg}" />
+				</div>
+
+				<p th:if="${#lists.isEmpty(upcomingMatches)}">No upcoming matches found</p>
+
+				<table class="table" th:if="${not #lists.isEmpty(upcomingMatches)}">
+					<tr>
+						<th>Date</th>
+						<th>Home</th>
+						<th class="text-center">Result</th>
+						<th>Away</th>
+						<th></th>
+					</tr>
+					<tr data-th-each="match : ${upcomingMatches}">
+						<td data-th-text="${match.getStrLocalScheduleDate()}"></td>
+						<td data-th-text="${match.homeName}"></td>
+						<td class="text-center">? - ?</td>
+						<td data-th-text="${match.awayName}"></td>
+						<td>
+							<div class= "pull-right">
+								<div class="col-sm-6">
+									<a class="btn btn-success" th:href="@{/match/} + ${match.matchId} + @{/handicap/create}" role="button"><i class="glyphicon glyphicon-plus"></i> Create handicap</a>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

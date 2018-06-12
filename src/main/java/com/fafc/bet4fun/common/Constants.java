@@ -14,4 +14,8 @@ public class Constants {
     public static final String MATCH_NOT_STARTED_STATUS = "Not-Started";
     public static final String MATCH_IN_PLAY_STATUS = "In-Play";
     public static final String MATCH_FINISH_STATUS = "Finish";
+
+    public static final String HANDICAP_HOME_WIN = "HOME_WIN";
+    public static final String HANDICAP_DRAW = "DRAW";
+    public static final String HANDICAP_AWAY_WIN = "AWAY_WIN";
 }

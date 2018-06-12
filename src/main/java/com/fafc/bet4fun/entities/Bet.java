@@ -33,7 +33,20 @@ public class Bet implements Serializable {
     @Column(name="one_x_two")
     private int oneXTwo;
 
+    @Column(name="stake")
     private int stake;
+
+    @Column(name="home_rate")
+    private float homeRate;
+
+    @Column(name="home_money_rate")
+    private float homeMoneyRate;
+
+    @Column(name="away_rate")
+    private float awayRate;
+
+    @Column(name="away_money_rate")
+    private float awayMoneyRate;
 
     @ManyToOne
     @JoinColumn(name="client_id")

@@ -8,4 +8,6 @@ public interface MatchService {
     public Match saveMatch(Match match);
     public List<Match> getAllMatches();
     public void deleteMatch(String uuid);
+    public List<Match> getAllUpcomingMatches();
+    public Match findById(String uuid);
 }
