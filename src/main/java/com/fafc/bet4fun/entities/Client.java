@@ -53,7 +53,7 @@ public class Client implements UserDetails {
 
     private String password;
 
-    private long balance;
+    private double balance;
 
     @OneToMany(mappedBy="client")
     private List<Handicap> handicaps;

@@ -43,8 +43,7 @@
 						<td>
 							<div class= "pull-right">
 								<div class="col-sm-6">
-									<form method="GET" th:action="@{/match/result/update}">
-										<input type="hidden" name="uuid" id="uuid" th:value="${match.matchId}" />
+									<form method="GET" th:action="@{/match/} + ${match.matchId} + @{/result/update}">
 										<button type="submit" class="btn btn-success"> <i class="glyphicon glyphicon glyphicon-edit"></i> Update Result</button>
 									</form>
 								</div>

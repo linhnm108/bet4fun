@@ -58,9 +58,6 @@ public class Handicap implements Serializable {
     @Column(name="max_bet")
     private int maxBet;
 
-    @Column(name="result")
-    private String result;
-
     @Transient
     private String strExpiredDate;
 
@@ -71,7 +68,7 @@ public class Handicap implements Serializable {
     @Column(name = "bookie_choice")
     private String bookieChoice;
 
-    @ManyToMany(mappedBy="handicaps")
+    @ManyToMany(mappedBy="handicaps", fetch=FetchType.LAZY)
     private List<Match> matches;
 
     @ManyToOne(fetch=FetchType.LAZY)
@@ -82,8 +79,8 @@ public class Handicap implements Serializable {
     private List<Bet> bets;
 
     public Handicap(Date scheduleDate) {
-        this.homeMoneyRate = 2;
-        this.awayMoneyRate = 2;
+        this.homeMoneyRate = 1;
+        this.awayMoneyRate = 1;
         this.maxBet = 50;
 
         Calendar cal = Calendar.getInstance();

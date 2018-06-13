@@ -6,5 +6,6 @@ import com.fafc.bet4fun.entities.Handicap;
 
 public interface HandicapService {
     public Handicap saveHandicap(Handicap handicap);
+    public Handicap findById(String uuid);
     public List<Handicap> getAllUpcomingHandicaps();
 }

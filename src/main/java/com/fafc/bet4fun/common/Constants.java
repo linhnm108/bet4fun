@@ -16,6 +16,11 @@ public class Constants {
     public static final String MATCH_FINISH_STATUS = "Finish";
 
     public static final String HANDICAP_HOME_WIN = "HOME_WIN";
-    public static final String HANDICAP_DRAW = "DRAW";
     public static final String HANDICAP_AWAY_WIN = "AWAY_WIN";
+
+    public static final String PUNTER_WIN_FULL = "PUNTER_WIN_FULL";
+    public static final String PUNTER_WIN_HALF = "PUNTER_WIN_HALF";
+    public static final String HANDICAP_DRAW = "DRAW";
+    public static final String PUNTER_LOSE_FULL = "PUNTER_LOSE_FULL";
+    public static final String PUNTER_LOSE_HALF = "PUNTER_LOSE_HALF";
 }

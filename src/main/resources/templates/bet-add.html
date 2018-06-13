@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Bet4Fun - Football is passion.</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/bootstrap-datetimepicker.min.css}">
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/bootstrap-validator/0.11.9/js/validator.js}"></script>
+<script th:src="@{/js/bootstrap-datetimepicker.js}"></script>
+</head>
+<body>
+	<div th:insert="~{header :: header}"></div>
+	<div class="container">
+		<div class="row">
+			<div th:insert="~{sidebar :: sidebar (${new String('handicaps-upcoming')})}"></div>
+			<div class="col-md-7" role="main">
+				<form method="POST" th:action="@{/handicap/} + ${handicap.handicapId} + @{/bet/create}" th:object="${bet}" data-toggle="validator">
+					<h3>Bet</h3>
+						<div class="form-group">
+							<label for="punterChoice">Your choice</label>
+							<div class="row checkbox">
+								<div class="col-sm-6" th:if="${handicap.bookieChoice != 'HOME_WIN'}">
+									<label>
+										<input type="radio" name="punterChoice" value="HOME_WIN" th:checked="${handicap.bookieChoice == 'AWAY_WIN'}">
+										<span th:text="${handicap.matches[0].homeName}"></span>
+										<br />
+										<span th:text="${bet.homeRate}"></span><strong><span style="font-size: 16px;" th:text=" ' @' + ${bet.homeMoneyRate}"></span></strong>
+									</label>
+								</div>
+								<div class="col-sm-6" th:if="${handicap.bookieChoice != 'AWAY_WIN'}">
+									<label>
+										<input type="radio" name="punterChoice" value="AWAY_WIN" th:checked="${handicap.bookieChoice == 'HOME_WIN'}" />
+										<span th:text="${handicap.matches[0].awayName}"></span>
+										<br />
+										<span th:text="${bet.awayRate}"></span><strong><span style="font-size: 16px;" th:text=" ' @' + ${bet.awayMoneyRate}"></span></strong>
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="stake">Stake</label>
+							<input th:type="number" name="stake" id="stake" min="50" step="50" th:max="${handicap.maxBet}" th:field="*{stake}" class="form-control" required />
+							<div class="help-block with-errors"></div>
+						</div>
+						<input type="hidden" name="homeMoneyRate" id="homeMoneyRate" th:field="*{homeMoneyRate}" />
+						<input type="hidden" name="homeRate" id="homeRate" th:field="*{homeRate}" />
+						<input type="hidden" name="awayRate" id="awayRate" th:field="*{awayRate}" />
+						<input type="hidden" name="awayMoneyRate" id="awayMoneyRate" th:field="*{awayMoneyRate}" />
+					<button type="submit" class="btn btn-success">Save</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+    $('.your-choice').on('change', function() {
+	    $('.your-choice').not(this).prop('checked', false);  
+	});
+    </script>
+</html>
