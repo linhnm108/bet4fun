@@ -35,7 +35,7 @@ public class BetServiceImpl implements BetService {
     @Override
     public List<Bet> getAllBetsOfCurrentUser() {
         Client currentUser = this.authenticationService.getLoggedInUser();
-        Query query = entityManager.createNativeQuery("SELECT * FROM bet WHERE client_id = ?", Bet.class);
+        Query query = entityManager.createNativeQuery("SELECT b1.* FROM bet b1 INNER JOIN handicap h1 ON b1.handicap_id = h1.handicap_id WHERE b1.client_id = ? ORDER BY h1.expired_date DESC", Bet.class);
         query.setParameter(1, currentUser.getClientId());
         return query.getResultList();
     }

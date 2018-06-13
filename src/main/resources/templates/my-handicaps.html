@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+<head>
+<title>Bet4Fun - Football is passion.</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div th:insert="~{header :: header}"></div>
+	<div class="container">
+		<div class="row">
+			<div th:insert="~{sidebar :: sidebar (${new String('my-handicaps')})}"></div>
+			<div class="col-md-9" role="main">
+				<h3>My handicaps</h3>
+
+				<div th:if="${message != null}" class="alert alert-success">
+					<p th:each="msg : ${message}" th:text="${msg}" />
+				</div>
+
+				<p th:if="${#lists.isEmpty(handicaps)}">No handicaps found</p>
+
+				<div th:if="${not #lists.isEmpty(handicaps)}" th:each="handicap : ${handicaps}" >
+					<div class="bg-primary row" style="font-size: 16px; padding: 10px;">
+						<span class="col-md-4" th:text="${handicap.matches[0].getStrLocalScheduleDate()}"></span>
+						<span class="col-md-3" th:text="${handicap.matches[0].homeName}"></span>
+						<span th:if="${handicap.matches[0].status == 'Finish'}" class="col-md-2" th:text="${handicap.matches[0].numberGoalHome} + ' : ' + ${handicap.matches[0].numberGoalAway}"></span>
+						<span th:if="${handicap.matches[0].status != 'Finish'}" class="col-md-2">? - ?</span>
+						<span class="col-md-3" th:text="${handicap.matches[0].awayName}"></span>
+					</div>
+					<table class="table" th:if="${not #lists.isEmpty(handicap.bets)}">
+						<tr>
+							<th>Punter</th>
+							<th>Punter's choice</th>
+							<th>Stake</th>
+							<th>Result</th>
+						</tr>
+						<tr data-th-each="bet : ${handicap.bets}" th:classappend="${bet.punterRevenue > 0 ? 'danger' : 'success'}">
+							<td data-th-text="${bet.client.clientName}"></td>
+							<td th:if="${bet.punterChoice == 'HOME_WIN'}" data-th-text="${bet.punterChoice} + ' (' + ${bet.homeRate} + '@' + ${bet.homeMoneyRate}  + ')'"></td>
+							<td th:if="${bet.punterChoice == 'AWAY_WIN'}" data-th-text="${bet.punterChoice} + ' (' + ${bet.awayRate} + '@' + ${bet.awayMoneyRate}  + ')'"></td>
+							<td data-th-text="${bet.stake}"></td>
+							<td data-th-text="${handicap.matches[0].status} == 'Finish' ? ${bet.punterRevenue} : 'Coming up' "></td>
+						</tr>
+					</table>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

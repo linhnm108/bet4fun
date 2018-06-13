@@ -66,4 +66,12 @@ public class HandicapController {
         redir.addAttribute(Constants.MESSAGE, "You bet successfully.");
         return "redirect:/handicaps/upcoming";
     }
+
+    @RequestMapping(value="/my-handicaps", method = RequestMethod.GET)
+    public String getAllMatches(Model model, HttpServletRequest request) {
+        List<Handicap> handicaps = this.handicapService.getAllHandicapsOfCurrentUser();
+        model.addAttribute("handicaps", handicaps);
+        model.addAttribute(Constants.MESSAGE, request.getParameter(Constants.MESSAGE));
+        return "my-handicaps";
+    }
 }

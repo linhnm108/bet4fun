@@ -37,7 +37,7 @@ public class HandicapServiceImpl implements HandicapService {
     @Override
     public List<Handicap> getAllUpcomingHandicaps() {
         Client currentUser = this.authenticationService.getLoggedInUser();
-        Query query = entityManager.createNativeQuery("SELECT * FROM handicap WHERE result IS NULL AND expired_date > current_date AND client_id != ? ORDER BY expired_date ASC", Handicap.class);
+        Query query = entityManager.createNativeQuery("SELECT * FROM handicap WHERE expired_date > current_date AND client_id != ? ORDER BY expired_date ASC", Handicap.class);
         query.setParameter(1, currentUser.getClientId());
         return query.getResultList();
     }
@@ -45,6 +45,15 @@ public class HandicapServiceImpl implements HandicapService {
     @Override
     public Handicap findById(String uuid) {
         return this.handicapRepository.findById(UUID.fromString(uuid)).get();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Handicap> getAllHandicapsOfCurrentUser() {
+        Client currentUser = this.authenticationService.getLoggedInUser();
+        Query query = entityManager.createNativeQuery("SELECT * FROM handicap WHERE client_id = ? ORDER BY expired_date DESC", Handicap.class);
+        query.setParameter(1, currentUser.getClientId());
+        return query.getResultList();
     }
 
 }

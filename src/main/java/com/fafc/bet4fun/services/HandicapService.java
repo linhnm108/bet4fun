@@ -8,4 +8,5 @@ public interface HandicapService {
     public Handicap saveHandicap(Handicap handicap);
     public Handicap findById(String uuid);
     public List<Handicap> getAllUpcomingHandicaps();
+    public List<Handicap> getAllHandicapsOfCurrentUser();
 }
