@@ -19,7 +19,7 @@
 					<li sec:authorize="hasRole('ROLE_ADMIN')" th:classappend="${active == 'matches'} ? active : ''"><a href="/matches">Match management</a></li>
 					<li sec:authorize="hasRole('ROLE_BOOKIE')"th:classappend="${active == 'matches-upcoming'} ? active : ''"><a href="/matches/upcoming">Upcoming matches</a></li>
 					<li sec:authorize="hasRole('ROLE_BOOKIE')"th:classappend="${active == 'my-handicaps'} ? active : ''"><a href="/my-handicaps">My handicaps</a></li>
-					<li sec:authorize="hasRole('ROLE_PUNTER')"th:classappend="${active == 'handicaps-upcoming'} ? active : ''"><a href="/handicaps-upcoming">Upcoming handicap</a></li>
+					<li sec:authorize="hasRole('ROLE_PUNTER')"th:classappend="${active == 'handicaps-upcoming'} ? active : ''"><a href="/handicaps/upcoming">Upcoming handicap</a></li>
 					<li sec:authorize="hasRole('ROLE_PUNTER')"th:classappend="${active == 'my-bets'} ? active : ''"><a href="/my-bets">My bets</a></li>
 				</ul>
 			</div>

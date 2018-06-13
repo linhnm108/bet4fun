@@ -42,7 +42,7 @@ public class MatchServiceImpl implements MatchService {
     @SuppressWarnings("unchecked")
     @Override
     public List<Match> getAllUpcomingMatches() {
-        Query query = entityManager.createNativeQuery("SELECT * FROM match WHERE status = ? ORDER BY schedule_date ASC", Match.class);
+        Query query = entityManager.createNativeQuery("SELECT * FROM match WHERE status = ? and schedule_date > current_date ORDER BY schedule_date ASC", Match.class);
         query.setParameter(1, Constants.MATCH_NOT_STARTED_STATUS);
 
         return query.getResultList();

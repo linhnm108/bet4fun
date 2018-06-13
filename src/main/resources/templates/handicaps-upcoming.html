@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+<head>
+<title>Bet4Fun - Football is passion.</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div th:insert="~{header :: header}"></div>
+	<div class="container">
+		<div class="row">
+			<div th:insert="~{sidebar :: sidebar (${new String('handicaps-upcoming')})}"></div>
+			<div class="col-md-9" role="main">
+				<h3>Upcoming handicaps</h3>
+
+				<div th:if="${message != null}" class="alert alert-success">
+					<p th:each="msg : ${message}" th:text="${msg}" />
+				</div>
+
+				<p th:if="${#lists.isEmpty(upcomingHandicaps)}">No upcoming handicaps found</p>
+
+				<table class="table" th:if="${not #lists.isEmpty(upcomingHandicaps)}">
+					<tr>
+						<th>Date</th>
+						<th>Home</th>
+						<th></th>
+						<th class="text-center">Odds</th>
+						<th></th>
+						<th>Away</th>
+						<th></th>
+					</tr>
+					<tr data-th-each="handicap : ${upcomingHandicaps}">
+						<td data-th-text="${handicap.matches[0].getStrLocalScheduleDate()}"></td>
+						<td data-th-text="${handicap.matches[0].homeName}"></td>
+						<th class="text-right" data-th-text="${#numbers.formatDecimal(handicap.homeMoneyRate,1,2,'POINT')}"></th>
+						<th class="text-center" data-th-text="${#strings.substringBefore(handicap.homeRate,'.0') == null ? handicap.homeRate : #strings.substringBefore(handicap.homeRate,'.0')} + ' : ' + ${#strings.substringBefore(handicap.awayRate,'.0') == null ? handicap.awayRate : #strings.substringBefore(handicap.awayRate,'.0')}"></th>
+						<th data-th-text="${#numbers.formatDecimal(handicap.awayMoneyRate,1,2,'POINT')}"></th>
+						<td data-th-text="${handicap.matches[0].awayName}"></td>
+						<td>
+							<div class= "pull-right">
+								<div class="col-sm-6">
+									<a class="btn btn-success" th:href="@{/handicap/} + ${handicap.handicapId} + @{/bet/create}" role="button"><i class="glyphicon glyphicon-plus"></i> Bet</a>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
