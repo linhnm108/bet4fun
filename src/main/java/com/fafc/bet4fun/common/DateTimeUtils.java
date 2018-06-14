@@ -17,7 +17,7 @@ public class DateTimeUtils {
     public static Date convertLocalDateToUTC(Date localDate) {
         DateFormat dateFormat = new SimpleDateFormat(Constants.DATE_PATTERN);
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        return convertStringToDate(dateFormat.format(localDate));
+        return convertStringToDate(dateFormat.format(localDate), Constants.DATE_PATTERN);
     }
 
     public static Date convertUTCDateToLocal(Date utcDate) {
@@ -29,9 +29,9 @@ public class DateTimeUtils {
         return dateFormat.format(date);
     }
 
-    public static Date convertStringToDate(String strDate) {
+    public static Date convertStringToDate(String strDate, String datePattern) {
         try {
-            return DateUtils.parseDate(strDate, Constants.DATE_PATTERN);
+            return DateUtils.parseDate(strDate, datePattern);
         } catch (ParseException e) {
             LOG.error(e.getMessage());
             return null;

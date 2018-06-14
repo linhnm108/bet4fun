@@ -21,15 +21,19 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fafc.bet4fun.api_models.UpcomingMatch;
+import com.fafc.bet4fun.common.Constants;
 import com.fafc.bet4fun.common.DateTimeUtils;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
 @Entity
 @Table(name="match")
+@NoArgsConstructor
 public class Match implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -69,13 +73,20 @@ public class Match implements Serializable {
             inverseJoinColumns = { @JoinColumn(name="handicap_id") })
     private List<Handicap> handicaps;
 
+    public Match(UpcomingMatch upcomingMatch) {
+        this.homeName = upcomingMatch.getTeam_season_home_name();
+        this.awayName = upcomingMatch.getTeam_season_away_name();
+        this.scheduleDate = DateTimeUtils.convertStringToDate(upcomingMatch.getSchedule_date(), Constants.SPORT_DEER_DATE_PATTERN);
+        this.status = Constants.MATCH_NOT_STARTED_STATUS;
+    }
+
     public String getStrLocalScheduleDate() {
         Date localDate = DateTimeUtils.convertUTCDateToLocal(this.scheduleDate);
         return DateTimeUtils.convertDateToString(localDate);
     }
 
     public void convertLocalScheduleDateToUTC() {
-        Date localDate = DateTimeUtils.convertStringToDate(this.strScheduleDate);
+        Date localDate = DateTimeUtils.convertStringToDate(this.strScheduleDate, Constants.DATE_PATTERN);
         this.scheduleDate = DateTimeUtils.convertLocalDateToUTC(localDate);
     }
 }

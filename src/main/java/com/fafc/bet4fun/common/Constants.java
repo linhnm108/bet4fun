@@ -11,6 +11,8 @@ public class Constants {
 
     public static final String DATE_PATTERN = "yyyy-MM-dd HH:mm";
 
+    public static final String SPORT_DEER_DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+
     public static final String MATCH_NOT_STARTED_STATUS = "Not-Started";
     public static final String MATCH_IN_PLAY_STATUS = "In-Play";
     public static final String MATCH_FINISH_STATUS = "Finish";

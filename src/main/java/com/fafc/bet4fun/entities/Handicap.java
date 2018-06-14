@@ -22,6 +22,7 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fafc.bet4fun.common.Constants;
 import com.fafc.bet4fun.common.DateTimeUtils;
 
 import lombok.Getter;
@@ -97,7 +98,7 @@ public class Handicap implements Serializable {
     }
 
     public void convertLocalExpiredDateToUTC() {
-        Date localDate = DateTimeUtils.convertStringToDate(this.strExpiredDate);
+        Date localDate = DateTimeUtils.convertStringToDate(this.strExpiredDate, Constants.DATE_PATTERN);
         this.expiredDate = DateTimeUtils.convertLocalDateToUTC(localDate);
     }
 }

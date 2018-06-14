@@ -16,15 +16,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fafc.bet4fun.api_models.SportDeer;
+import com.fafc.bet4fun.api_models.Token;
+import com.fafc.bet4fun.api_models.UpcomingMatch;
 import com.fafc.bet4fun.common.Constants;
 import com.fafc.bet4fun.entities.Bet;
 import com.fafc.bet4fun.entities.Client;
 import com.fafc.bet4fun.entities.Handicap;
 import com.fafc.bet4fun.entities.Match;
+import com.fafc.bet4fun.entities.SyncHistory;
 import com.fafc.bet4fun.services.AuthenticationService;
 import com.fafc.bet4fun.services.BetService;
 import com.fafc.bet4fun.services.HandicapService;
 import com.fafc.bet4fun.services.MatchService;
+import com.fafc.bet4fun.services.SportDeerService;
+import com.fafc.bet4fun.services.SyncHistoryService;
 import com.fafc.bet4fun.services.UserService;
 
 @Controller
@@ -44,6 +50,12 @@ public class MatchController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    SyncHistoryService syncService;
+
+    @Autowired
+    SportDeerService sportDeerService;
 
     @RequestMapping(value="/matches", method = RequestMethod.GET)
     public String getAllMatches(Model model, HttpServletRequest request) {
@@ -135,6 +147,32 @@ public class MatchController {
 
         redir.addAttribute(Constants.MESSAGE, "Match has been updated.");
         return "redirect:/matches";
+    }
+
+    @RequestMapping(value="/matches/sync", method = RequestMethod.GET)
+    public String syncMatches(Model model) {
+        model.addAttribute("syncHistory", new SyncHistory());
+        model.addAttribute("syncHistories" , this.syncService.getAllSyncHistory());
+        return "matches-sync";
+    }
+
+    @RequestMapping(value="/matches/sync", method = RequestMethod.POST)
+    public String syncMatches(@Valid @ModelAttribute("syncHistory") SyncHistory syncHistory, BindingResult errors, RedirectAttributes redir) {
+        Token token = this.sportDeerService.getAccessToken(syncHistory.getRefreshToken());
+        SportDeer sportDeer = this.sportDeerService.getUpcommingMatches(token.getNew_access_token(), syncHistory.getFromDate(), syncHistory.getToDate());
+        this.syncMatchFromSportDeer(sportDeer);
+
+        this.syncService.saveSyncHistory(syncHistory);
+
+        redir.addAttribute(Constants.MESSAGE, "Sync successfully.");
+        return "redirect:/matches/sync";
+    }
+
+    private void syncMatchFromSportDeer(SportDeer sportDeer) {
+        for (UpcomingMatch upcomingMatch : sportDeer.getDocs()) {
+            Match match = new Match(upcomingMatch);
+            this.matchService.saveMatch(match);
+        }
     }
 
     private void updateBalanceForUsers(Client bookie, Client punter, double punterRevenue) {
