@@ -25,10 +25,10 @@
 				<div th:if="${not #lists.isEmpty(handicaps)}" th:each="handicap : ${handicaps}" >
 					<div class="bg-primary row" style="font-size: 16px; padding: 10px;">
 						<span class="col-md-4" th:text="${handicap.matches[0].getStrLocalScheduleDate()}"></span>
-						<span class="col-md-3" th:text="${handicap.matches[0].homeName}"></span>
+						<span class="col-md-3" th:text="${handicap.matches[0].homeName} + ' (' + ${handicap.homeRate} + '@' + ${handicap.homeMoneyRate}  + ')' "></span>
 						<span th:if="${handicap.matches[0].status == 'Finish'}" class="col-md-2" th:text="${handicap.matches[0].numberGoalHome} + ' : ' + ${handicap.matches[0].numberGoalAway}"></span>
 						<span th:if="${handicap.matches[0].status != 'Finish'}" class="col-md-2">? - ?</span>
-						<span class="col-md-3" th:text="${handicap.matches[0].awayName}"></span>
+						<span class="col-md-3" th:text="${handicap.matches[0].awayName} + ' (' + ${handicap.homeRate} + '@' + ${handicap.homeMoneyRate}  + ')' "></span>
 					</div>
 					<table class="table" th:if="${not #lists.isEmpty(handicap.bets)}">
 						<tr>

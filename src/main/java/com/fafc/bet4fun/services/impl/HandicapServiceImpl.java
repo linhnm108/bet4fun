@@ -37,7 +37,7 @@ public class HandicapServiceImpl implements HandicapService {
     @Override
     public List<Handicap> getAllUpcomingHandicaps() {
         Client currentUser = this.authenticationService.getLoggedInUser();
-        Query query = entityManager.createNativeQuery("SELECT * FROM handicap WHERE expired_date > current_date AND client_id != ? ORDER BY expired_date ASC", Handicap.class);
+        Query query = entityManager.createNativeQuery("SELECT * FROM handicap WHERE expired_date > CURRENT_TIMESTAMP AT TIME ZONE 'UTC' AND client_id != ? ORDER BY expired_date ASC", Handicap.class);
         query.setParameter(1, currentUser.getClientId());
         return query.getResultList();
     }
