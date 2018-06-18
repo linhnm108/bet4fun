@@ -37,12 +37,19 @@
 							<th>Stake</th>
 							<th>Result</th>
 						</tr>
-						<tr data-th-each="bet : ${handicap.bets}" th:classappend="${bet.punterRevenue > 0 ? 'danger' : 'success'}">
+						<tr th:if="${handicap.matches[0].status} == 'Finish'" data-th-each="bet : ${handicap.bets}" th:classappend="${bet.punterRevenue > 0 ? 'danger' : 'success'}">
 							<td data-th-text="${bet.client.clientName}"></td>
-							<td th:if="${bet.punterChoice == 'HOME_WIN'}" data-th-text="${bet.punterChoice} + ' (' + ${bet.homeRate} + '@' + ${bet.homeMoneyRate}  + ')'"></td>
-							<td th:if="${bet.punterChoice == 'AWAY_WIN'}" data-th-text="${bet.punterChoice} + ' (' + ${bet.awayRate} + '@' + ${bet.awayMoneyRate}  + ')'"></td>
+							<td th:if="${bet.punterChoice == 'HOME_WIN'}" data-th-text="${handicap.matches[0].homeName} + ' (' + ${bet.homeRate - bet.awayRate} + '@' + ${bet.homeMoneyRate}  + ')'"></td>
+							<td th:if="${bet.punterChoice == 'AWAY_WIN'}" data-th-text="${handicap.matches[0].awayName} + ' (' + ${bet.awayRate - bet.homeRate} + '@' + ${bet.awayMoneyRate}  + ')'"></td>
 							<td data-th-text="${bet.stake}"></td>
-							<td data-th-text="${handicap.matches[0].status} == 'Finish' ? ${bet.punterRevenue} : 'Coming up' "></td>
+							<td data-th-text="${bet.punterRevenue}"></td>
+						</tr>
+						<tr th:if="${handicap.matches[0].status} != 'Finish'" data-th-each="bet : ${handicap.bets}" class="info">
+							<td data-th-text="${bet.client.clientName}"></td>
+							<td th:if="${bet.punterChoice == 'HOME_WIN'}" data-th-text="${handicap.matches[0].homeName} + ' (' + ${bet.homeRate} + '@' + ${bet.homeMoneyRate}  + ')'"></td>
+							<td th:if="${bet.punterChoice == 'AWAY_WIN'}" data-th-text="${handicap.matches[0].awayName} + ' (' + ${bet.awayRate} + '@' + ${bet.awayMoneyRate}  + ')'"></td>
+							<td data-th-text="${bet.stake}"></td>
+							<td>Coming up</td>
 						</tr>
 					</table>
 				</div>

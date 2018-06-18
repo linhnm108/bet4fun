@@ -37,8 +37,8 @@
 						<td data-th-text="${bet.handicap.matches[0].homeName}"></td>
 						<td th:if="${bet.handicap.matches[0].status != 'Finish'}">? : ?</td>
 						<td data-th-text="${bet.handicap.matches[0].awayName}"></td>
-						<td th:if="${bet.punterChoice == 'HOME_WIN'}" data-th-text="${bet.punterChoice} + ' (' + ${bet.homeRate} + '@' + ${bet.homeMoneyRate}  + ')'"></td>
-						<td th:if="${bet.punterChoice == 'AWAY_WIN'}" data-th-text="${bet.punterChoice} + ' (' + ${bet.awayRate} + '@' + ${bet.awayMoneyRate}  + ')'"></td>
+						<td th:if="${bet.punterChoice == 'HOME_WIN'}" data-th-text="${bet.handicap.matches[0].homeName} + ' (' + ${bet.homeRate - bet.awayRate} + '@' + ${bet.homeMoneyRate}  + ')'"></td>
+						<td th:if="${bet.punterChoice == 'AWAY_WIN'}" data-th-text="${bet.handicap.matches[0].awayName} + ' (' + ${bet.awayRate - bet.homeRate} + '@' + ${bet.awayMoneyRate}  + ')'"></td>
 						<td data-th-text="${bet.handicap.client.clientName}"></td>
 						<td>Coming up</td>
 					</tr>
@@ -47,8 +47,8 @@
 						<td data-th-text="${bet.handicap.matches[0].homeName}"></td>
 						<td th:if="${bet.handicap.matches[0].status == 'Finish'}" data-th-text="${bet.handicap.matches[0].numberGoalHome} + ' : ' + ${bet.handicap.matches[0].numberGoalAway}"></td>
 						<td data-th-text="${bet.handicap.matches[0].awayName}"></td>
-						<td th:if="${bet.punterChoice == 'HOME_WIN'}" data-th-text="${bet.punterChoice} + ' (' + ${bet.homeRate} + '@' + ${bet.homeMoneyRate}  + ')'"></td>
-						<td th:if="${bet.punterChoice == 'AWAY_WIN'}" data-th-text="${bet.punterChoice} + ' (' + ${bet.awayRate} + '@' + ${bet.awayMoneyRate}  + ')'"></td>
+						<td th:if="${bet.punterChoice == 'HOME_WIN'}" data-th-text="${bet.handicap.matches[0].homeName} + ' (' + ${bet.homeRate} + '@' + ${bet.homeMoneyRate}  + ')'"></td>
+						<td th:if="${bet.punterChoice == 'AWAY_WIN'}" data-th-text="${bet.handicap.matches[0].awayName} + ' (' + ${bet.awayRate} + '@' + ${bet.awayMoneyRate}  + ')'"></td>
 						<td data-th-text="${bet.handicap.client.clientName}"></td>
 						<td data-th-text="${bet.punterRevenue}"></td>
 					</tr>
