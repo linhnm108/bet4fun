@@ -24,7 +24,7 @@
 							<div class="row checkbox">
 								<div class="col-sm-6" th:if="${handicap.bookieChoice != 'HOME_WIN'}">
 									<label>
-										<input type="radio" name="punterChoice" value="HOME_WIN" th:checked="${handicap.bookieChoice == 'AWAY_WIN'}">
+										<input type="radio" name="punterChoice" value="HOME_WIN" th:checked="${handicap.bookieChoice == 'AWAY_WIN'}" required />
 										<span th:text="${handicap.matches[0].homeName}"></span>
 										<br />
 										<span th:text="${bet.homeRate}"></span><strong><span style="font-size: 16px;" th:text=" ' @' + ${bet.homeMoneyRate}"></span></strong>
@@ -32,7 +32,7 @@
 								</div>
 								<div class="col-sm-6" th:if="${handicap.bookieChoice != 'AWAY_WIN'}">
 									<label>
-										<input type="radio" name="punterChoice" value="AWAY_WIN" th:checked="${handicap.bookieChoice == 'HOME_WIN'}" />
+										<input type="radio" name="punterChoice" value="AWAY_WIN" th:checked="${handicap.bookieChoice == 'HOME_WIN'}" required />
 										<span th:text="${handicap.matches[0].awayName}"></span>
 										<br />
 										<span th:text="${bet.awayRate}"></span><strong><span style="font-size: 16px;" th:text=" ' @' + ${bet.awayMoneyRate}"></span></strong>
