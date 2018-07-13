@@ -59,6 +59,12 @@ public class Handicap implements Serializable {
     @Column(name="max_bet")
     private int maxBet;
 
+    @Column(name="total_goals")
+    private float totalGoals;
+
+    @Column(name="handicap_type")
+    private String handicapType;
+
     @Transient
     private String strExpiredDate;
 

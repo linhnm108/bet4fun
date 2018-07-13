@@ -37,8 +37,11 @@
 						<td data-th-text="${match.awayName}"></td>
 						<td>
 							<div class= "pull-right">
-								<div class="col-sm-6">
-									<a class="btn btn-success" th:href="@{/match/} + ${match.matchId} + @{/handicap/create}" role="button"><i class="glyphicon glyphicon-plus"></i> Create handicap</a>
+								<div class="col-sm-5">
+									<a class="btn btn-success" th:href="@{/match/} + ${match.matchId} + @{/handicap/create}" role="button"><i class="glyphicon glyphicon-plus"></i> Kèo 1x2 </a>
+								</div>
+								<div class="col-sm-5">
+									<a class="btn btn-info" th:href="@{/match/} + ${match.matchId} + @{/handicap/over-under/create}" role="button"><i class="glyphicon glyphicon-plus"></i> Tài Xỉu </a>
 								</div>
 							</div>
 						</td>

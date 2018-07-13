@@ -19,6 +19,11 @@ public class Constants {
 
     public static final String HANDICAP_HOME_WIN = "HOME_WIN";
     public static final String HANDICAP_AWAY_WIN = "AWAY_WIN";
+    public static final String HANDICAP_OVER = "OVER";
+    public static final String HANDICAP_UNDER = "UNDER";
+
+    public static final String HANDICAP_1x2 = "1x2";
+    public static final String HANDICAP_OVER_UNDER = "OVER-UNDER";
 
     public static final String PUNTER_WIN_FULL = "PUNTER_WIN_FULL";
     public static final String PUNTER_WIN_HALF = "PUNTER_WIN_HALF";

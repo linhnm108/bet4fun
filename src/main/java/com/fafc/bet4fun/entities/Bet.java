@@ -41,6 +41,9 @@ public class Bet implements Serializable {
     @Column(name="stake")
     private int stake;
 
+    @Column(name="total_goals")
+    private float totalGoals;
+
     @Column(name="home_rate")
     private float homeRate;
 
@@ -69,10 +72,52 @@ public class Bet implements Serializable {
         this.homeMoneyRate = handicap.getHomeMoneyRate();
         this.awayMoneyRate = handicap.getAwayMoneyRate();
         this.awayRate = handicap.getAwayRate();
+        this.totalGoals = handicap.getTotalGoals();
         this.stake = 50;
     }
 
-    public void calculatePunterRevenue(int numberGoalHome, int numberGoalAway) {
+    public void calculatePunterRevenue(int numberGoalHome, int numberGoalAway, String handicapType) {
+        if (StringUtils.isBlank(handicapType) || StringUtils.equals(handicapType, Constants.HANDICAP_1x2)) {
+            this.calculate1x2HandicapResult(numberGoalHome, numberGoalAway);
+        } else if (StringUtils.equals(handicapType, Constants.HANDICAP_OVER_UNDER)) {
+            this.calculateOverUnderHandicapResult(numberGoalHome, numberGoalAway);
+        }
+    }
+
+    private void calculateOverUnderHandicapResult(int numberGoalHome, int numberGoalAway) {
+        int actualTotalGoal = numberGoalHome + numberGoalAway;
+        float goalDifference = actualTotalGoal - this.totalGoals;
+
+        if (goalDifference == 0) {
+            this.punterRevenue = 0;
+        } else if (goalDifference == 0.25) {
+            if (StringUtils.equals(this.punterChoice, Constants.HANDICAP_OVER)){
+                this.punterRevenue = this.stake * this.homeMoneyRate * 0.5;
+            } else {
+                this.punterRevenue = -1 * this.stake * 0.5;
+            }
+        } else if (goalDifference > 0.25) {
+            if (StringUtils.equals(this.punterChoice, Constants.HANDICAP_OVER)) {
+                this.punterRevenue = this.stake * this.homeMoneyRate;
+            } else {
+                this.punterRevenue = -1 * this.stake;
+            }
+        } else if (goalDifference == -0.25) {
+            if (StringUtils.equals(this.punterChoice, Constants.HANDICAP_OVER)) {
+                this.punterRevenue = -1 * this.stake * 0.5;
+            } else {
+                this.punterRevenue = this.stake * this.awayMoneyRate * 0.5;
+            }
+        } else {
+            if (StringUtils.equals(this.punterChoice, Constants.HANDICAP_OVER)) {
+                this.punterRevenue = -1 * this.stake;
+            } else {
+                this.punterRevenue = this.stake * this.awayMoneyRate;
+            }
+        }
+    }
+
+    private void calculate1x2HandicapResult(int numberGoalHome, int numberGoalAway) {
         float totalHomeGoals = numberGoalHome + this.homeRate;
         float totalAwayGoals = numberGoalAway + this.awayRate;
         float goalDifference = totalHomeGoals - totalAwayGoals;

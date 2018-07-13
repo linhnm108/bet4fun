@@ -35,9 +35,18 @@ public class HandicapServiceImpl implements HandicapService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Handicap> getAllUpcomingHandicaps() {
+    public List<Handicap> getAll1x2UpcomingHandicaps() {
         Client currentUser = this.authenticationService.getLoggedInUser();
-        Query query = entityManager.createNativeQuery("SELECT * FROM handicap WHERE expired_date > CURRENT_TIMESTAMP AT TIME ZONE 'UTC' AND client_id != ? ORDER BY expired_date ASC", Handicap.class);
+        Query query = entityManager.createNativeQuery("SELECT * FROM handicap WHERE expired_date > CURRENT_TIMESTAMP AT TIME ZONE 'UTC' AND client_id != ? AND handicap_type = '1x2' ORDER BY expired_date ASC", Handicap.class);
+        query.setParameter(1, currentUser.getClientId());
+        return query.getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Handicap> getAllOverUnderUpcomingHandicaps() {
+        Client currentUser = this.authenticationService.getLoggedInUser();
+        Query query = entityManager.createNativeQuery("SELECT * FROM handicap WHERE expired_date > CURRENT_TIMESTAMP AT TIME ZONE 'UTC' AND client_id != ? AND handicap_type = 'OVER-UNDER' ORDER BY expired_date ASC", Handicap.class);
         query.setParameter(1, currentUser.getClientId());
         return query.getResultList();
     }
@@ -49,11 +58,19 @@ public class HandicapServiceImpl implements HandicapService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Handicap> getAllHandicapsOfCurrentUser() {
+    public List<Handicap> getAll1x2HandicapsOfCurrentUser() {
         Client currentUser = this.authenticationService.getLoggedInUser();
-        Query query = entityManager.createNativeQuery("SELECT * FROM handicap WHERE client_id = ? ORDER BY expired_date DESC", Handicap.class);
+        Query query = entityManager.createNativeQuery("SELECT * FROM handicap WHERE client_id = ? AND handicap_type = '1x2' ORDER BY expired_date DESC", Handicap.class);
         query.setParameter(1, currentUser.getClientId());
         return query.getResultList();
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Handicap> getAllOverUnderHandicapsOfCurrentUser() {
+        Client currentUser = this.authenticationService.getLoggedInUser();
+        Query query = entityManager.createNativeQuery("SELECT * FROM handicap WHERE client_id = ? AND handicap_type = 'OVER-UNDER' ORDER BY expired_date DESC", Handicap.class);
+        query.setParameter(1, currentUser.getClientId());
+        return query.getResultList();
+    }
 }

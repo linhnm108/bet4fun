@@ -37,8 +37,12 @@ public class HandicapController {
 
     @RequestMapping(value="/handicaps/upcoming", method = RequestMethod.GET)
     public String getAllUpcomingHandicaps(Model model, HttpServletRequest request) {
-        List<Handicap> upcomingHandicaps = this.handicapService.getAllUpcomingHandicaps();
-        model.addAttribute("upcomingHandicaps", upcomingHandicaps);
+        List<Handicap> upcoming1x2Handicaps = this.handicapService.getAll1x2UpcomingHandicaps();
+        model.addAttribute("upcomingHandicaps", upcoming1x2Handicaps);
+
+        List<Handicap> upcomingOverUnderHandicaps = this.handicapService.getAllOverUnderUpcomingHandicaps();
+        model.addAttribute("upcomingOverUnderHandicaps", upcomingOverUnderHandicaps);
+
         model.addAttribute(Constants.MESSAGE, request.getParameter(Constants.MESSAGE));
         return "handicaps-upcoming";
     }
@@ -69,8 +73,12 @@ public class HandicapController {
 
     @RequestMapping(value="/my-handicaps", method = RequestMethod.GET)
     public String getAllMatches(Model model, HttpServletRequest request) {
-        List<Handicap> handicaps = this.handicapService.getAllHandicapsOfCurrentUser();
-        model.addAttribute("handicaps", handicaps);
+        List<Handicap> handicaps1x2 = this.handicapService.getAll1x2HandicapsOfCurrentUser();
+        model.addAttribute("handicaps", handicaps1x2);
+
+        List<Handicap> overUnderHandicaps = this.handicapService.getAllOverUnderHandicapsOfCurrentUser();
+        model.addAttribute("overUnderHandicaps", overUnderHandicaps);
+
         model.addAttribute(Constants.MESSAGE, request.getParameter(Constants.MESSAGE));
         return "my-handicaps";
     }

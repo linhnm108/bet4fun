@@ -37,8 +37,12 @@
 						<td data-th-text="${bet.handicap.matches[0].homeName}"></td>
 						<td>? : ?</td>
 						<td data-th-text="${bet.handicap.matches[0].awayName}"></td>
+
 						<td th:if="${bet.punterChoice == 'HOME_WIN'}" data-th-text="${bet.handicap.matches[0].homeName} + ' (' + ${bet.homeRate - bet.awayRate} + '@' + ${bet.homeMoneyRate}  + ')'"></td>
 						<td th:if="${bet.punterChoice == 'AWAY_WIN'}" data-th-text="${bet.handicap.matches[0].awayName} + ' (' + ${bet.awayRate - bet.homeRate} + '@' + ${bet.awayMoneyRate}  + ')'"></td>
+						<td th:if="${bet.punterChoice == 'OVER'}" data-th-text=" 'Over ' + ${bet.handicap.totalGoals} "></td>
+						<td th:if="${bet.punterChoice == 'UNDER'}" data-th-text=" 'Under ' + ${bet.handicap.totalGoals} "></td>
+
 						<td data-th-text="${bet.handicap.client.clientName}"></td>
 						<td>Coming up</td>
 					</tr>
@@ -47,8 +51,12 @@
 						<td data-th-text="${bet.handicap.matches[0].homeName}"></td>
 						<td data-th-text="${bet.handicap.matches[0].numberGoalHome} + ' : ' + ${bet.handicap.matches[0].numberGoalAway}"></td>
 						<td data-th-text="${bet.handicap.matches[0].awayName}"></td>
+
 						<td th:if="${bet.punterChoice == 'HOME_WIN'}" data-th-text="${bet.handicap.matches[0].homeName} + ' (' + ${bet.homeRate - bet.awayRate} + '@' + ${bet.homeMoneyRate}  + ')'"></td>
 						<td th:if="${bet.punterChoice == 'AWAY_WIN'}" data-th-text="${bet.handicap.matches[0].awayName} + ' (' + ${bet.awayRate - bet.homeRate} + '@' + ${bet.awayMoneyRate}  + ')'"></td>
+						<td th:if="${bet.punterChoice == 'OVER'}" data-th-text=" 'Over ' + ${bet.handicap.totalGoals} "></td>
+						<td th:if="${bet.punterChoice == 'UNDER'}" data-th-text=" 'Under ' + ${bet.handicap.totalGoals} "></td>
+
 						<td data-th-text="${bet.handicap.client.clientName}"></td>
 						<td data-th-text="${bet.punterRevenue}"></td>
 					</tr>
@@ -57,8 +65,12 @@
 						<td data-th-text="${bet.handicap.matches[0].homeName}"></td>
 						<td data-th-text="${bet.handicap.matches[0].numberGoalHome} + ' : ' + ${bet.handicap.matches[0].numberGoalAway}"></td>
 						<td data-th-text="${bet.handicap.matches[0].awayName}"></td>
+
 						<td th:if="${bet.punterChoice == 'HOME_WIN'}" data-th-text="${bet.handicap.matches[0].homeName} + ' (' + ${bet.homeRate - bet.awayRate} + '@' + ${bet.homeMoneyRate}  + ')'"></td>
 						<td th:if="${bet.punterChoice == 'AWAY_WIN'}" data-th-text="${bet.handicap.matches[0].awayName} + ' (' + ${bet.awayRate - bet.homeRate} + '@' + ${bet.awayMoneyRate}  + ')'"></td>
+						<td th:if="${bet.punterChoice == 'OVER'}" data-th-text=" 'Over ' + ${bet.handicap.totalGoals} "></td>
+						<td th:if="${bet.punterChoice == 'UNDER'}" data-th-text=" 'Under ' + ${bet.handicap.totalGoals} "></td>
+
 						<td data-th-text="${bet.handicap.client.clientName}"></td>
 						<td data-th-text="${bet.punterRevenue}"></td>
 					</tr>

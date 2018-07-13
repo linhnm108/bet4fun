@@ -18,17 +18,18 @@
 
 				<div th:if="${message != null}" class="alert alert-success">
 					<p th:each="msg : ${message}" th:text="${msg}" />
-				</div>
+				</div><hr size="10" />
 
-				<p th:if="${#lists.isEmpty(handicaps)}">No handicaps found</p>
+				<h4>1x2 handicaps</h4>
+				<p th:if="${#lists.isEmpty(handicaps)}">No 1x2 handicaps found</p>
 
 				<div th:if="${not #lists.isEmpty(handicaps)}" th:each="handicap : ${handicaps}" >
 					<div class="bg-primary row" style="font-size: 16px; padding: 10px;">
-						<span class="col-md-4" th:text="${handicap.matches[0].getStrLocalScheduleDate()}"></span>
-						<span class="col-md-3" th:text="${handicap.matches[0].homeName} + ' (' + ${handicap.homeRate} + '@' + ${handicap.homeMoneyRate}  + ')' "></span>
-						<span th:if="${handicap.matches[0].status == 'Finish'}" class="col-md-2" th:text="${handicap.matches[0].numberGoalHome} + ' : ' + ${handicap.matches[0].numberGoalAway}"></span>
-						<span th:if="${handicap.matches[0].status != 'Finish'}" class="col-md-2">? - ?</span>
-						<span class="col-md-3" th:text="${handicap.matches[0].awayName} + ' (' + ${handicap.awayRate} + '@' + ${handicap.awayMoneyRate}  + ')' "></span>
+						<span class="col-md-3" th:text="${handicap.matches[0].getStrLocalScheduleDate()}"></span>
+						<span class="col-md-4" th:text="${handicap.matches[0].homeName} + ' (' + ${handicap.homeRate} + '@' + ${handicap.homeMoneyRate}  + ')' "></span>
+						<span th:if="${handicap.matches[0].status == 'Finish'}" class="col-md-1" th:text="${handicap.matches[0].numberGoalHome} + ' : ' + ${handicap.matches[0].numberGoalAway}"></span>
+						<span th:if="${handicap.matches[0].status != 'Finish'}" class="col-md-1">? - ?</span>
+						<span class="col-md-4" th:text="${handicap.matches[0].awayName} + ' (' + ${handicap.awayRate} + '@' + ${handicap.awayMoneyRate}  + ')' "></span>
 					</div>
 					<table class="table" th:if="${not #lists.isEmpty(handicap.bets)}">
 						<tr>
@@ -55,6 +56,49 @@
 							<td data-th-text="${bet.client.clientName}"></td>
 							<td th:if="${bet.punterChoice == 'HOME_WIN'}" data-th-text="${handicap.matches[0].homeName} + ' (' + ${bet.homeRate - bet.awayRate} + '@' + ${bet.homeMoneyRate}  + ')'"></td>
 							<td th:if="${bet.punterChoice == 'AWAY_WIN'}" data-th-text="${handicap.matches[0].awayName} + ' (' + ${bet.awayRate - bet.homeRate} + '@' + ${bet.awayMoneyRate}  + ')'"></td>
+							<td data-th-text="${bet.stake}"></td>
+							<td>Coming up</td>
+						</tr>
+					</table>
+				</div>
+
+				<h4>Over under handicaps</h4>
+				<p th:if="${#lists.isEmpty(overUnderHandicaps)}">No under over handicaps found</p>
+
+				<div th:if="${not #lists.isEmpty(overUnderHandicaps)}" th:each="handicap : ${overUnderHandicaps}" >
+					<div class="bg-primary row" style="font-size: 16px; padding: 10px;">
+						<span class="col-md-3" th:text="${handicap.matches[0].getStrLocalScheduleDate()}"></span>
+						<span class="col-md-3" th:text="${handicap.matches[0].homeName}"></span>
+						<span th:if="${handicap.matches[0].status == 'Finish'}" class="col-md-1" th:text="${handicap.matches[0].numberGoalHome} + ' : ' + ${handicap.matches[0].numberGoalAway}"></span>
+						<span th:if="${handicap.matches[0].status != 'Finish'}" class="col-md-1">? - ?</span>
+						<span class="col-md-3" th:text="${handicap.matches[0].awayName}"></span>
+						<span class="col-md-2" th:text="'Total goals: ' + ${handicap.totalGoals}"></span>
+					</div>
+					<table class="table" th:if="${not #lists.isEmpty(handicap.bets)}">
+						<tr>
+							<th>Punter</th>
+							<th>Punter's choice</th>
+							<th>Stake</th>
+							<th>Result</th>
+						</tr>
+						<tr data-th-each="bet : ${handicap.bets}" class="warning" th:if="${handicap.matches[0].status} == 'Finish' and ${bet.punterRevenue} == 0 ">
+							<td data-th-text="${bet.client.clientName}"></td>
+							<td th:if="${bet.punterChoice == 'OVER'}" data-th-text=" 'Over ' + ${bet.handicap.totalGoals} "></td>
+							<td th:if="${bet.punterChoice == 'UNDER'}" data-th-text=" 'Under ' + ${bet.handicap.totalGoals} "></td>
+							<td data-th-text="${bet.stake}"></td>
+							<td data-th-text="${bet.punterRevenue}"></td>
+						</tr>
+						<tr data-th-each="bet : ${handicap.bets}" th:classappend="${bet.punterRevenue > 0 ? 'danger' : 'success'}" th:if="${handicap.matches[0].status} == 'Finish' and ${bet.punterRevenue} != 0">
+							<td data-th-text="${bet.client.clientName}"></td>
+							<td th:if="${bet.punterChoice == 'OVER'}" data-th-text=" 'Over ' + ${bet.handicap.totalGoals} "></td>
+							<td th:if="${bet.punterChoice == 'UNDER'}" data-th-text=" 'Under ' + ${bet.handicap.totalGoals} "></td>
+							<td data-th-text="${bet.stake}"></td>
+							<td data-th-text="${bet.punterRevenue}"></td>
+						</tr>
+						<tr th:if="${handicap.matches[0].status} != 'Finish'" data-th-each="bet : ${handicap.bets}" class="info">
+							<td data-th-text="${bet.client.clientName}"></td>
+							<td th:if="${bet.punterChoice == 'OVER'}" data-th-text=" 'Over ' + ${bet.handicap.totalGoals} "></td>
+							<td th:if="${bet.punterChoice == 'UNDER'}" data-th-text=" 'Under ' + ${bet.handicap.totalGoals} "></td>
 							<td data-th-text="${bet.stake}"></td>
 							<td>Coming up</td>
 						</tr>

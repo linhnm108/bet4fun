@@ -98,9 +98,37 @@ public class MatchController {
     public String addHandicap(@PathVariable String matchId, Model model) {
         Match match = this.matchService.findById(matchId);
         model.addAttribute("match", match);
-        model.addAttribute("handicap", new Handicap(match.getScheduleDate()));
+        Handicap handicap1x2 = new Handicap(match.getScheduleDate());
+        handicap1x2.setHandicapType(Constants.HANDICAP_1x2);
+        model.addAttribute("handicap", handicap1x2);
 
         return "handicap-add";
+    }
+
+    @RequestMapping(value="/match/{matchId}/handicap/over-under/create", method = RequestMethod.GET)
+    public String addOverUnderHandicap(@PathVariable String matchId, Model model) {
+        Match match = this.matchService.findById(matchId);
+        model.addAttribute("match", match);
+        Handicap handicapOverUnder = new Handicap(match.getScheduleDate());
+        handicapOverUnder.setHandicapType(Constants.HANDICAP_OVER_UNDER);
+        model.addAttribute("handicap", handicapOverUnder);
+
+        return "handicap-over-under-add";
+    }
+
+    @RequestMapping(value="/match/{matchId}/handicap/over-under/create", method = RequestMethod.POST)
+    public String addOverUnderHandicap(@PathVariable String matchId, @Valid @ModelAttribute("handicap") Handicap handicap, BindingResult errors, RedirectAttributes redir) {
+
+        handicap.convertLocalExpiredDateToUTC();
+        handicap.setClient(this.authenticationService.getLoggedInUser());
+        handicap.setHandicapType(Constants.HANDICAP_OVER_UNDER);
+        handicap = this.handicapService.saveHandicap(handicap);
+
+        Match match = this.matchService.findById(matchId);
+        match.getHandicaps().add(handicap);
+        this.matchService.saveMatch(match);
+        redir.addAttribute(Constants.MESSAGE, "You has added a handicap for match " + match.getMatchId() + " successfully.");
+        return "redirect:/matches/upcoming";
     }
 
     @RequestMapping(value="/match/{matchId}/handicap/create", method = RequestMethod.POST)
@@ -108,6 +136,7 @@ public class MatchController {
 
         handicap.convertLocalExpiredDateToUTC();
         handicap.setClient(this.authenticationService.getLoggedInUser());
+        handicap.setHandicapType(Constants.HANDICAP_1x2);
         handicap = this.handicapService.saveHandicap(handicap);
 
         Match match = this.matchService.findById(matchId);
@@ -139,7 +168,7 @@ public class MatchController {
             List<Bet> betsOfHandicap = handicap.getBets();
             Client bookie = handicap.getClient();
             for (Bet bet : betsOfHandicap) {
-                bet.calculatePunterRevenue(match.getNumberGoalHome(), match.getNumberGoalAway());
+                bet.calculatePunterRevenue(match.getNumberGoalHome(), match.getNumberGoalAway(), handicap.getHandicapType());
                 Bet updatedBet = this.betService.saveBet(bet);
                 this.updateBalanceForUsers(bookie, updatedBet.getClient(), updatedBet.getPunterRevenue());
             }
