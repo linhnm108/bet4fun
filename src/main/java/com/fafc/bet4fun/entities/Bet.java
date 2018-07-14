@@ -92,13 +92,13 @@ public class Bet implements Serializable {
             this.punterRevenue = 0;
         } else if (goalDifference == 0.25) {
             if (StringUtils.equals(this.punterChoice, Constants.HANDICAP_OVER)){
-                this.punterRevenue = this.stake * this.homeMoneyRate * 0.5;
+                this.punterRevenue = this.stake * this.awayMoneyRate * 0.5;
             } else {
                 this.punterRevenue = -1 * this.stake * 0.5;
             }
         } else if (goalDifference > 0.25) {
             if (StringUtils.equals(this.punterChoice, Constants.HANDICAP_OVER)) {
-                this.punterRevenue = this.stake * this.homeMoneyRate;
+                this.punterRevenue = this.stake * this.awayMoneyRate;
             } else {
                 this.punterRevenue = -1 * this.stake;
             }
@@ -106,13 +106,13 @@ public class Bet implements Serializable {
             if (StringUtils.equals(this.punterChoice, Constants.HANDICAP_OVER)) {
                 this.punterRevenue = -1 * this.stake * 0.5;
             } else {
-                this.punterRevenue = this.stake * this.awayMoneyRate * 0.5;
+                this.punterRevenue = this.stake * this.homeMoneyRate * 0.5;
             }
         } else {
             if (StringUtils.equals(this.punterChoice, Constants.HANDICAP_OVER)) {
                 this.punterRevenue = -1 * this.stake;
             } else {
-                this.punterRevenue = this.stake * this.awayMoneyRate;
+                this.punterRevenue = this.stake * this.homeMoneyRate;
             }
         }
     }
