@@ -5,7 +5,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,7 +33,6 @@ public class UserController {
     @Autowired
     SignupValidator signupValidator;
 
-
     @Autowired
     LoginValidator loginValidator;
 
@@ -43,6 +44,9 @@ public class UserController {
 
     @Autowired
     RoleService roleService;
+
+    @Autowired
+    BCryptPasswordEncoder encoder;
 
     @RequestMapping(value="/login", method = RequestMethod.GET)
     public String login(Model model, String error, String logout) {
@@ -111,5 +115,34 @@ public class UserController {
 
         redir.addAttribute(Constants.MESSAGE, "User " + user.getClientName() + " has been assigned new roles.");
         return "redirect:/users";
+    }
+
+    @RequestMapping(value="/user/password/change", method = RequestMethod.GET)
+    public String changePassword() {
+        return "password-change";
+    }
+
+    @RequestMapping(value="/user/password/change", method = RequestMethod.POST)
+    public String changePassword(Model model, HttpServletRequest request) {
+
+        String oldPassword = request.getParameter("oldPassword");
+        String newPassword = request.getParameter("newPassword");
+        String confirmPassword = request.getParameter("confirmPassword");
+
+        Client currentUser = this.authenticationService.getLoggedInUser();
+        if (StringUtils.isEmpty(newPassword)) {
+            model.addAttribute(Constants.ERROR, "New password is required.");
+        } else if (!this.encoder.matches(oldPassword, currentUser.getPassword())) {
+            model.addAttribute(Constants.ERROR, "Your old password is incorrect.");
+        } else if (!StringUtils.equals(newPassword, confirmPassword)) {
+            model.addAttribute(Constants.ERROR, "Your new password and confirmation password do not match.");
+        } else {
+            currentUser.setPassword(this.encoder.encode(newPassword));
+            this.userService.saveUser(currentUser);
+    
+            model.addAttribute(Constants.MESSAGE, "Your password changed successfully.");
+        }
+
+        return "password-change";
     }
 }
